@@ -60,13 +60,13 @@ pipeline {
         success {
             slackSend(
                 channel: 'builds',
-                message: "✅ Build Successful: ${env.JOB_NAME} - #${env.BUILD_NUMBER}"
+                message: "Build Successful: ${env.JOB_NAME} - #${env.BUILD_NUMBER}"
             )
         }
         failure {
             slackSend(
-                channel: '#builds',
-                message: "❌ Build Failed: ${env.JOB_NAME} - #${env.BUILD_NUMBER}"
+                channel: 'builds',
+                message: "Build Failed: ${env.JOB_NAME} - #${env.BUILD_NUMBER}"
             )
         }
     }
