@@ -5,7 +5,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'roseaw-dockerhub'                                 // <------DON'T change this
         DOCKER_IMAGE = 'cithit/wilso682'                                                 // <------change this
         IMAGE_TAG = "build-${BUILD_NUMBER}"
-        GITHUB_URL = 'https://github.com/jazzwilson/225-lab3-1'                   // <------change this
+        GITHUB_URL = 'https://github.com/jazzwilson/225-lab3-2'                   // <------change this (fixed to lab3-2)
         KUBECONFIG = credentials('wilso682-225')                                             // <------change this
     }
 
@@ -53,6 +53,21 @@ pipeline {
                     sh "kubectl get all"
                 }
             }
+        }
+    }
+    
+    post {
+        success {
+            slackSend(
+                channel: 'builds',
+                message: "✅ Build Successful: ${env.JOB_NAME} - #${env.BUILD_NUMBER}"
+            )
+        }
+        failure {
+            slackSend(
+                channel: '#builds',
+                message: "❌ Build Failed: ${env.JOB_NAME} - #${env.BUILD_NUMBER}"
+            )
         }
     }
 }
